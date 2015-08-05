@@ -12,23 +12,25 @@
     <script>
         document.addEventListener('DOMContentLoaded',function(){
             var string = document.getElementsByTagName('div')[0].textContent;
-            console.log(string);
+            //console.log(string);
             var input = document.getElementById('content');
             input.addEventListener('keypress',function(event){
-                //console.log(this.value + String.fromCharCode(event.charCode));
-                var char = String.fromCharCode(event.charCode);
-                var newString = '';
-                if(string.indexOf(char) !== -1){
-                    newString= string.replace(new RegExp(char,'g'),'<span>'+char+'</span>');
-                    document.getElementsByTagName('div')[0].innerHTML = newString;
-                    console.log(newString);
+                var newString,char;
+                if(event.keyCode !== 8){
+                    char = this.value + String.fromCharCode(event.charCode);
+                    console.log(char);
+                }else{
+                    char = this.value.slice(0,-1);
+                    console.log(char);
                 }
+                newString = string.replace(new RegExp(char,'g'),'<span>'+char+'</span>');
+                document.getElementsByTagName('div')[0].innerHTML = newString;
             });
         })
     </script>
 </head>
 <body>
-    <div>wertyusdfghjkertyuifgh</div>
+    <div>The Deferred object, introduced in jQuery 1.5, is a chainable utility object created by calling the jQuery.Deferred() method. It can register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.</div>
     <input type="text" id="content">
 </body>
 </html>
