@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        var content = document.getElementsByClassName('content')[0];
+        //console.log(content)
+        var ul = content.getElementsByTagName('ul');
+        //console.log(ul)
+        var SchenList = [],EUList = [],CandiList = [],PoteList = [];
+        var EUYear = {};
+
+        getList(ul[0].children,SchenList);
+        getList(ul[1].children,EUList);
+
+        EUList.forEach(function(prop){
+            var year = prop.slice(-5,-1);
+            prop = prop.slice(0,-6);
+
+            EUYear[prop] = year;
+
+        });
+        //console.log(EUYear);
+
+        getList(ul[2].children,CandiList);
+        getList(ul[3].children,PoteList);
+
+        function getList(arr,result){
+            if(!Array.isArray(arr)) arr = Array.prototype.slice.call(arr);
+            arr.forEach(function(prop){
+                result.push(prop.textContent);
+            })
+        }
+
+        var schengen = {
+
+            EUCountries:EUYear,
+            SchenCountries:SchenList,
+            CandCountries:CandiList,
+            PoteCountries:PoteList,
+            getCountries: function(start,till){
+                var result = [];
+                var countries = this.EUCountries;
+                for(var prop in countries){
+                    if(countries[prop]>= start && countries[prop]<=till){
+                        result.push(prop);
+                    }
+                }
+                return result;
+            }
+
+        };
+        //console.log(schengen.EUCountries)
+        //console.log(schengen.PoteCountries)
+        var a = schengen.getCountries(1995,2004);
+        console.log(a);
+
+    </script>
+</head>
+<body>
+    <p>http://www.schengenvisainfo.com/schengen-visa-countries-list/</p>
+    <ul>
+        <li>
+            <a>dhhh</a>
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <link href="margin.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+
+            var tree = document.getElementById('tree');
+            var a = '[-]',b = '[+]';
+            tree.innerHTML = '<span>'+a+'</span>'+'body';
+            var div = document.createElement('div');
+            tree.appendChild(div);
+            var parent = document.body.firstElementChild;
+            var i = 1;
+            div.innerHTML += '<span class="margin-0">'+a+'</span>'+parent.tagName.toLowerCase();
+
+            getTree(parent,div);
+            function getTree(parent,div){
+                if(parent.children.length>0){
+                    Array.prototype.forEach.call(parent.children,function(prop){
+                        var newdiv = document.createElement('div');
+                        div.appendChild(newdiv);
+                        console.log(prop);
+                        console.log(i);
+                        newdiv.innerHTML += '<span class="margin-'+i+'">'+a+'</span>'+prop.tagName.toLowerCase();
+                        if(prop.children.length>0) {
+                            i++;
+                            getTree(prop,newdiv);
+                            i--;
+                        }
+                    });
+                }
+            }
+
+            var span = document.getElementsByTagName('span');
+            Array.prototype.forEach.call(span,function(prop){
+                collapse(prop);
+            });
+
+            function collapse(ele){
+                var display = true;
+                ele.addEventListener('click',function(){
+                    if(display){
+                        if(this.nextElementSibling){
+                            Array.prototype.forEach.call($(this).siblings(),function(prop){
+                                prop.classList.remove('block');
+                                prop.classList.add('none');
+                            });
+                        }
+                        this.innerHTML = b;
+                        display = false;
+
+                    }else{
+                        if(this.nextElementSibling){
+                            Array.prototype.forEach.call($(this).siblings(),function(prop){
+                                prop.classList.remove('none');
+                                prop.classList.add('block');
+                            });
+                        }
+                        this.innerHTML = a;
+                        display = true;
+                    }
+                });
+            }
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <div>
+
+        </div>
+        <div>
+            <div>
+                <span></span>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+    <div id="tree">
+
+    </div>
+</body>
+</html>
